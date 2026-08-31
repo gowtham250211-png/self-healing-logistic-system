@@ -1,4 +1,3 @@
-cat << 'EOF' > README.md
 # 🚚 Autonomous Self-Healing Logistics & Supply Chain Platform
 
 An intelligent, event-driven logistics orchestration platform engineered with automated failure detection, dynamic route re-optimization, and self-healing mitigation workflows to prevent supply chain bottlenecks and cargo delivery disruptions in real time.
@@ -45,9 +44,9 @@ An intelligent, event-driven logistics orchestration platform engineered with au
 * **Automated Escalation Triggers**: Instantly provisions replacement dispatches if a critical failure cannot be safely mitigated en route.
 
 ### 📊 Real-Time Operations & Monitoring
-* **Live Fleet Tracking Dashboard**: Interactive map visualizer showing live fleet status, shipment health, and route progress.
+* **Live Fleet Tracking Dashboard**: Interactive visualizer showing live fleet status, shipment health, and route progress.
 * **Incident Ledger & Root Cause Analytics**: Structured audit log tracking every detected anomaly, auto-remediation attempt, and final resolution.
-* **Operator Override Controls**: Allows dispatch managers to approve, reject, or fine-tune automated remediation proposals.
+* **Operator Override Controls**: Allows dispatch managers to inspect, approve, or adjust automated remediation proposals.
 
 ---
 
@@ -55,38 +54,59 @@ An intelligent, event-driven logistics orchestration platform engineered with au
 
 | Layer | Technology | Purpose |
 | :--- | :--- | :--- |
-| **Backend** | Spring Boot 3, Java 21 | High-throughput REST API & core failure detection engine |
-| **Persistence** | PostgreSQL, Spring Data JPA | Relational data store for shipments, carriers, and audit history |
-| **In-Memory Cache** | Redis | Fast state tracking for live telemetry & sensor readings |
-| **Frontend** | React 18, Tailwind CSS | Logistics command center, real-time alerts & incident boards |
-| **DevOps** | Docker, Docker Compose | Multi-container setup for seamless local & cloud deployment |
+| **Backend** | Spring Boot 3, Java 21 | High-throughput REST API & failure detection engine |
+| **Security & Data** | Spring Data JPA, Hibernate | Object-relational mapping & transaction management |
+| **Database** | PostgreSQL | Relational storage for shipments, telemetry, and audit logs |
+| **Frontend** | React, Tailwind CSS | Real-time fleet command center & incident interface |
+| **Build Tools** | Maven / Gradle, Vite | Dependency management and frontend bundling |
 
 ---
 
-## 🚀 Quick Start & Deployment
+## 🚀 Local Setup & Run Guide
 
 ### Prerequisites
-* [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running
-* *Optional for local development*: Java 21 (JDK) and Node.js 18+
+* **Java Development Kit (JDK)**: Version 17 or 21 installed
+* **Node.js**: Version 18+ and `npm` installed
+* **PostgreSQL**: Installed and running locally on port `5432`
 
-### 1. Clone the Repository
-```bash
-git clone [https://github.com/gowtham250211-png/self-healing-logistic-system.git](https://github.com/gowtham250211-png/self-healing-logistic-system.git)
-cd self-healing-logistic-system
-2. Start the Application Stack
+---
+
+### Step 1: Database Setup
+1. Start your local PostgreSQL server.
+2. Create a database for the application (e.g., in `pgAdmin` or `psql`):
+   ```sql
+   CREATE DATABASE logistics_db;
+Update your database username and password in backend/src/main/resources/application.properties (or application.yml):
+
+Properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/logistics_db
+spring.datasource.username=postgres
+spring.datasource.password=your_password
+spring.jpa.hibernate.ddl-auto=update
+Step 2: Start the Spring Boot Backend
+Open a terminal in the project root:
+
 Bash
-docker compose up --build -d
-Frontend Command Center: http://localhost:5173 (or http://localhost:3000)
+cd backend
+mvn spring-boot:run
+(Or use ./mvnw spring-boot:run on Linux/macOS or mvnw.cmd spring-boot:run on Windows)
 
-Backend REST API: http://localhost:8080/api
+The backend server will launch at http://localhost:8080.
 
-PostgreSQL Database: localhost:5432
+Step 3: Start the React Frontend
+Open a new terminal window:
 
-📡 API Reference Overview
+Bash
+cd frontend
+npm install
+npm run dev
+The frontend application will be live at http://localhost:5173 (or http://localhost:3000).
+
+📡 Core API Reference
 Plaintext
 POST   /api/shipments                 - Register new cargo shipment and define baseline route
 GET    /api/shipments/{id}/status     - Fetch live shipment metrics, route coordinates, and ETA
 POST   /api/telemetry/ingest          - Push real-time IoT vehicle/sensor telemetry packets
 GET    /api/incidents                 - Retrieve all active anomalies and triggered failure states
 POST   /api/incidents/{id}/remediate  - Trigger automated self-healing mitigation action
-GET    /api/audit/logs                - Retrieve complete ledger of system anomalies and a
+GET    /api/audit/logs                - Retrieve complete ledger of system anomalies and actions
