@@ -1,112 +1,163 @@
-# 🚚 Autonomous Self-Healing Logistics & Supply Chain Platform
+# 🚚 Self-Healing Logistics System
 
-An intelligent, event-driven logistics orchestration platform engineered with automated failure detection, dynamic route re-optimization, and self-healing mitigation workflows to prevent supply chain bottlenecks and cargo delivery disruptions in real time.
+A smart logistics platform designed to automatically detect shipment disruptions and perform recovery actions with minimal human intervention. The system improves logistics reliability by monitoring shipments in real time, identifying failures, assigning backup vehicles, and selecting alternate routes.
 
----
+## 📌 Features
 
-## 🏗️ System Architecture & Self-Healing Pipeline
+* 📦 Real-time shipment tracking
+* 🚨 Automated failure detection
+* 🔄 Self-healing recovery mechanism
+* 🚛 Backup vehicle assignment
+* 🗺️ Alternate route optimization
+* 🔔 Notification system
+* 👥 Role-Based Access Control (Admin/User)
+* 📊 Logistics dashboard and analytics
+* 🔗 REST API integration
+* 🏗️ Microservices-based architecture
 
-┌─────────────────────────────────────────────────────────────┐
-│             Shipment & IoT Telemetry Ingestion              │
-│      (GPS Coordinates, Temperature, Velocity, Milestones)   │
-└──────────────────────────────┬──────────────────────────────┘
-│
-┌──────────────────────────────▼──────────────────────────────┐
-│                  Failure Detection Engine                   │
-│  (Delay Projections, Cold Chain Breaches, Route Stoppages)  │
-└──────────────┬───────────────────────────────┬──────────────┘
-│ [Anomaly Detected]            │ [Normal Flow]
-┌──────────────▼──────────────┐                │
-│    Self-Healing Engine      │                │
-│ • Dynamic Rerouting         │                │
-│ • Alternative Hub Balancing │                │
-│ • Carrier Auto-Failover     │                │
-└──────────────┬──────────────┘                │
-│                               │
-┌──────────────▼───────────────────────────────▼──────────────┐
-│               Notification & Operational Hub                │
-│      (Live Dashboard, Driver Alerts, Incident Logging)      │
-└─────────────────────────────────────────────────────────────┘
+## 🛠️ Tech Stack
 
+### Frontend
 
----
+* React.js
+* JavaScript
+* HTML5
+* CSS3
+* Bootstrap
+* Axios
 
-## ✨ Core Platform Capabilities
+### Backend
 
-### 🔍 Failure Detection Engine
-* **Predictive Delay Calculation**: Compares real-time GPS telemetry and traffic data against target delivery SLAs to flag potential delays before they escalate.
-* **Cold-Chain & Integrity Monitoring**: Continuous verification of environmental sensors (temperature, humidity, shock) with immediate threshold trip-triggers.
-* **Transit Anomaly Identification**: Automatically detects prolonged unscheduled stops, route deviations, and checkpoint bypasses.
+* Java 17
+* Spring Boot
+* Spring Data JPA
+* Spring Security
+* REST APIs
 
-### ⚡ Autonomous Self-Healing Workflows
-* **Dynamic Route Remediation**: Re-computes optimal detour paths around road closures, congestion points, and regional weather bottlenecks.
-* **Smart Carrier & Vehicle Reassignment**: Re-allocates stalled shipments to available standby fleet units within nearest logistics hubs.
-* **Automated Escalation Triggers**: Instantly provisions replacement dispatches if a critical failure cannot be safely mitigated en route.
+### Database
 
-### 📊 Real-Time Operations & Monitoring
-* **Live Fleet Tracking Dashboard**: Interactive visualizer showing live fleet status, shipment health, and route progress.
-* **Incident Ledger & Root Cause Analytics**: Structured audit log tracking every detected anomaly, auto-remediation attempt, and final resolution.
-* **Operator Override Controls**: Allows dispatch managers to inspect, approve, or adjust automated remediation proposals.
+* MySQL
 
----
+### Tools & Platforms
 
-## 🛠️ Technology Stack
+* Git & GitHub
+* Postman
+* IntelliJ IDEA
+* VS Code
+* Apache Tomcat
+* Docker
 
-| Layer | Technology | Purpose |
-| :--- | :--- | :--- |
-| **Backend** | Spring Boot 3, Java 21 | High-throughput REST API & failure detection engine |
-| **Security & Data** | Spring Data JPA, Hibernate | Object-relational mapping & transaction management |
-| **Database** | PostgreSQL | Relational storage for shipments, telemetry, and audit logs |
-| **Frontend** | React, Tailwind CSS | Real-time fleet command center & incident interface |
-| **Build Tools** | Maven / Gradle, Vite | Dependency management and frontend bundling |
+## 🏗️ System Architecture
 
----
+```
+Frontend (React.js)
+        ↓
+REST APIs (Axios)
+        ↓
+Spring Boot Backend
+        ↓
+Microservices Layer
+ ├── User Service
+ ├── Shipment Service
+ ├── Failure Detection Service
+ ├── Recovery Service
+ ├── Notification Service
+        ↓
+MySQL Database
+```
 
-## 🚀 Local Setup & Run Guide
+## 🔄 Self-Healing Workflow
 
-### Prerequisites
-* **Java Development Kit (JDK)**: Version 17 or 21 installed
-* **Node.js**: Version 18+ and `npm` installed
-* **PostgreSQL**: Installed and running locally on port `5432`
+1. Shipment is created and assigned to a vehicle.
+2. System continuously monitors shipment status.
+3. Delays or disruptions are automatically detected.
+4. Shipment status changes:
 
----
+   ```
+   NORMAL → DELAYED → FAILED → RECOVERED
+   ```
+5. Recovery service selects:
 
-### Step 1: Database Setup
-1. Start your local PostgreSQL server.
-2. Create a database for the application (e.g., in `pgAdmin` or `psql`):
-   ```sql
-   CREATE DATABASE logistics_db;
-Update your database username and password in backend/src/main/resources/application.properties (or application.yml):
+   * Backup vehicle
+   * Alternate route
+6. Shipment is reassigned automatically.
+7. Notifications are sent to users/admins.
 
-Properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/logistics_db
-spring.datasource.username=postgres
-spring.datasource.password=your_password
-spring.jpa.hibernate.ddl-auto=update
-Step 2: Start the Spring Boot Backend
-Open a terminal in the project root:
+## 📂 Project Modules
 
-Bash
+* User Management
+* Shipment Management
+* Vehicle Management
+* Failure Detection
+* Recovery Management
+* Route Optimization
+* Notification System
+* Admin Dashboard
+
+## 💾 Database Entities
+
+* Users
+* Shipments
+* Vehicles
+* Routes
+* Failures
+* Recoveries
+* Notifications
+
+## 🚀 Installation
+
+### Backend
+
+```bash
+git clone https://github.com/your-username/self-healing-logistics-system.git
 cd backend
+```
+
+Update `application.properties`:
+
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/logistics_db
+spring.datasource.username=root
+spring.datasource.password=your_password
+```
+
+Run:
+
+```bash
 mvn spring-boot:run
-(Or use ./mvnw spring-boot:run on Linux/macOS or mvnw.cmd spring-boot:run on Windows)
+```
 
-The backend server will launch at http://localhost:8080.
+### Frontend
 
-Step 3: Start the React Frontend
-Open a new terminal window:
-
-Bash
+```bash
 cd frontend
 npm install
 npm run dev
-The frontend application will be live at http://localhost:5173 (or http://localhost:3000).
+```
 
-📡 Core API Reference
-Plaintext
-POST   /api/shipments                 - Register new cargo shipment and define baseline route
-GET    /api/shipments/{id}/status     - Fetch live shipment metrics, route coordinates, and ETA
-POST   /api/telemetry/ingest          - Push real-time IoT vehicle/sensor telemetry packets
-GET    /api/incidents                 - Retrieve all active anomalies and triggered failure states
-POST   /api/incidents/{id}/remediate  - Trigger automated self-healing mitigation action
-GET    /api/audit/logs                - Retrieve complete ledger of system anomalies and actions
+## 📸 Screenshots
+
+Add screenshots here:
+
+* Login Page
+* Dashboard
+* Shipment Tracking
+* Failure Detection Screen
+* Recovery Dashboard
+
+## 🎯 Future Enhancements
+
+* AI-based demand prediction
+* Real-time GPS integration
+* IoT-enabled vehicle monitoring
+* Cloud deployment (AWS)
+* Advanced analytics dashboard
+
+## 👨‍💻 Author
+
+**Gowtham G**
+B.Tech – Artificial Intelligence and Data Science
+Full Stack Java Developer
+
+* GitHub: https://github.com/gowtham250211
+* LinkedIn: https://linkedin.com/in/gowtham-g299132308
